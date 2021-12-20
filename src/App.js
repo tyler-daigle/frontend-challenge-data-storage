@@ -1,5 +1,7 @@
 import "./App.css";
 
+import { useState } from "react";
+
 import ControlPanel from "./components/ControlPanel";
 import Logo from "./components/Logo";
 import Toolbar from "./components/Toolbar";
@@ -13,9 +15,26 @@ import DocumentIcon from "./images/icon-document.svg";
 import FolderIcon from "./images/icon-folder.svg";
 import UploadIcon from "./images/icon-upload.svg";
 
-const storage = { total: 1000, used: 400, unit: "GB" };
-
 export default function App() {
+  const [storage, setStorage] = useState({
+    total: 1000,
+    used: 400,
+    unit: "GB",
+  });
+
+  const uploadData = () => {
+    setStorage({
+      ...storage,
+      used: storage.used + 100,
+    });
+  };
+
+  const downloadData = () => {
+    setStorage({
+      ...storage,
+      used: storage.used - 100,
+    });
+  };
   return (
     <div className="main-container">
       <ControlPanel>
@@ -26,12 +45,13 @@ export default function App() {
               className="icon-image"
               src={DocumentIcon}
               alt="Document Icon"
+              onClick={downloadData}
             />
           </Button>
           <Button>
             <img className="icon-image" src={FolderIcon} alt="Document Icon" />
           </Button>
-          <Button>
+          <Button onClick={uploadData}>
             <img className="icon-image" src={UploadIcon} alt="Document Icon" />
           </Button>
         </Toolbar>
